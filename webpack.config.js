@@ -19,6 +19,7 @@ function setMode(env) {
         publicPath: "/"
       },
       devServer: {
+        port: 9000,
         contentBase: paths.build
       },
       module: {
