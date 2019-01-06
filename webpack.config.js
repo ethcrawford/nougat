@@ -3,19 +3,23 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const paths = {
+  build: resolve(__dirname, "build")
+};
+
 function setMode(env) {
   if (env === "development") {
     return {
       mode: "development",
       entry: "./src/index",
       output: {
-        path: resolve(__dirname, "build"),
+        path: paths.build,
         filename: "static/js/[name].js",
         chunkFilename: "static/js/[name].chunk.js",
         publicPath: "/"
       },
       devServer: {
-        contentBase: resolve(__dirname, "build")
+        contentBase: paths.build
       },
       module: {
         rules: [
@@ -68,7 +72,7 @@ function setMode(env) {
     mode: "production",
     entry: "./src/index",
     output: {
-      path: resolve(__dirname, "build"),
+      path: paths.build,
       filename: "static/js/[name].[chunkhash:8].js",
       chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
       publicPath: "./"
