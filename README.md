@@ -11,7 +11,7 @@ not present so as not to clutter up the project, they can be used separately.
 
 MIT License
 
-Copyright (c) 2018-2019 Ethan Crawford
+Copyright (c) 2019 Ethan Crawford
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
