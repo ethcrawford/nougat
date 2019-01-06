@@ -1,6 +1,6 @@
 {
   "name": "wrapping-paper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Stub project with Webpack configuration to develop a simple static interface. Supports Babel, Sass and Autoprefixer. Convenient work with customization Bootstrap 4. The names of the output files contain a hash, the manifest of matching the old names is attached. Linters are not installed, as it is assumed that they are integrated into the code editor. Image and sprite processors are not present so as not to clutter up the project, they can be used separately.",
   "main": "./src/index.js",
   "repository": "https://github.com/ethcrawford/wrapping-paper",
@@ -10,6 +10,11 @@
   "scripts": {
     "start": "webpack-dev-server --env development",
     "build": "webpack"
+  },
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.6"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
