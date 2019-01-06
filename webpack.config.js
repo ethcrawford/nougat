@@ -12,6 +12,9 @@ function setMode(env) {
         filename: "static/js/[name].js",
         chunkFilename: "static/js/[name].chunk.js",
         publicPath: "/"
+      },
+      devServer: {
+        contentBase: resolve(__dirname, "build")
       }
     };
   }
