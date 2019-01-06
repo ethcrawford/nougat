@@ -2,6 +2,7 @@
 
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const paths = {
   build: resolve(__dirname, "build")
@@ -33,6 +34,10 @@ function setMode(env) {
                   minimize: false,
                   attrs: ["img:src", "link:href", ":data-src"]
                 }
+              },
+              {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
               },
               {
                 exclude: [/\.js$/, /\.html$/, /\.json$/],
@@ -91,6 +96,16 @@ function setMode(env) {
               }
             },
             {
+              test: /\.css$/,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: "../../" }
+                },
+                "css-loader"
+              ]
+            },
+            {
               exclude: [/\.js$/, /\.html$/, /\.json$/],
               loader: "file-loader",
               options: {
@@ -107,6 +122,10 @@ function setMode(env) {
         filename: "index.html",
         title: "",
         minify: minHtmlConfig
+      }),
+      new MiniCssExtractPlugin({
+        filename: "static/css/[name].[contenthash:8].css",
+        chunkFilename: "static/css/[name].[contenthash:8].chunk.css"
       })
     ]
   };
