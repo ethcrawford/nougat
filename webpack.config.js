@@ -38,6 +38,15 @@ function setMode(env) {
                 }
               },
               {
+                test: /\.js$/,
+                exclude: /^node_modules\//,
+                loader: "babel-loader",
+                options: {
+                  cacheDirectory: true,
+                  cacheCompression: false
+                }
+              },
+              {
                 test: /\.css$/,
                 use: [
                   "style-loader",
@@ -138,6 +147,16 @@ function setMode(env) {
               options: {
                 minimize: false,
                 attrs: ["img:src", "link:href", ":data-src"]
+              }
+            },
+            {
+              test: /\.js$/,
+              exclude: /^node_modules\//,
+              loader: "babel-loader",
+              options: {
+                cacheDirectory: true,
+                cacheCompression: true,
+                compact: true
               }
             },
             {
