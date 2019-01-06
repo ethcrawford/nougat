@@ -40,6 +40,19 @@ function setMode(env) {
                 use: ["style-loader", "css-loader"]
               },
               {
+                test: /\.scss$/,
+                use: [
+                  "style-loader",
+                  {
+                    loader: "css-loader",
+                    options: {
+                      importLoaders: 1
+                    }
+                  },
+                  "sass-loader"
+                ]
+              },
+              {
                 exclude: [/\.js$/, /\.html$/, /\.json$/],
                 loader: "file-loader",
                 options: {
@@ -103,6 +116,22 @@ function setMode(env) {
                   options: { publicPath: "../../" }
                 },
                 "css-loader"
+              ]
+            },
+            {
+              test: /\.scss$/,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: "../../" }
+                },
+                {
+                  loader: "css-loader",
+                  options: {
+                    importLoaders: 1
+                  }
+                },
+                "sass-loader"
               ]
             },
             {
