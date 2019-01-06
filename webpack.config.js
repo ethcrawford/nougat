@@ -6,6 +6,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PostcssFlexbugsFixes = require("postcss-flexbugs-fixes");
 const Autoprefixer = require("autoprefixer");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const paths = {
   build: resolve(__dirname, "build")
@@ -15,6 +17,7 @@ function setMode(env) {
   if (env === "development") {
     return {
       mode: "development",
+      devtool: "cheap-module-source-map",
       entry: "./src/index",
       output: {
         path: paths.build,
@@ -131,12 +134,49 @@ function setMode(env) {
   };
   return {
     mode: "production",
+    devtool: "source-map",
     entry: "./src/index",
     output: {
       path: paths.build,
       filename: "static/js/[name].[chunkhash:8].js",
       chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
       publicPath: "./"
+    },
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            parse: {
+              ecma: 8
+            },
+            compress: {
+              ecma: 5,
+              warnings: false,
+              comparisons: false,
+              inline: 2
+            },
+            mangle: {
+              safari10: true
+            },
+            output: {
+              ecma: 5,
+              comments: false,
+              ascii_only: true
+            }
+          },
+          parallel: true,
+          cache: true,
+          sourceMap: true
+        }),
+        new OptimizeCssAssetsPlugin({
+          cssProcessorOptions: {
+            map: {
+              inline: false,
+              annotation: true
+            }
+          }
+        })
+      ]
     },
     module: {
       rules: [
