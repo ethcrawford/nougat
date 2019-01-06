@@ -28,6 +28,13 @@ function setMode(env) {
                   minimize: false,
                   attrs: ["img:src", "link:href", ":data-src"]
                 }
+              },
+              {
+                exclude: [/\.js$/, /\.html$/, /\.json$/],
+                loader: "file-loader",
+                options: {
+                  name: "static/media/[name].[hash:8].[ext]"
+                }
               }
             ]
           }
@@ -76,6 +83,13 @@ function setMode(env) {
               options: {
                 minimize: false,
                 attrs: ["img:src", "link:href", ":data-src"]
+              }
+            },
+            {
+              exclude: [/\.js$/, /\.html$/, /\.json$/],
+              loader: "file-loader",
+              options: {
+                name: "static/media/[name].[hash:8].[ext]"
               }
             }
           ]
