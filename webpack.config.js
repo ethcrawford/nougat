@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PostcssFlexbugsFixes = require("postcss-flexbugs-fixes");
 const Autoprefixer = require("autoprefixer");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 const paths = {
   build: resolve(__dirname, "build")
@@ -233,6 +234,9 @@ function setMode(env) {
       new MiniCssExtractPlugin({
         filename: "static/css/[name].[contenthash:8].css",
         chunkFilename: "static/css/[name].[contenthash:8].chunk.css"
+      }),
+      new ManifestPlugin({
+        fileName: "assets-manifest.json"
       })
     ]
   };
