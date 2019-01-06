@@ -34,10 +34,9 @@ function setMode(env) {
           {
             oneOf: [
               {
-                test: [/\.html$/],
+                test: /\.html$/,
                 loader: "html-loader",
                 options: {
-                  minimize: false,
                   attrs: ["img:src", "link:href", ":data-src"]
                 }
               },
@@ -183,7 +182,7 @@ function setMode(env) {
         {
           oneOf: [
             {
-              test: [/\.html$/],
+              test: /\.html$/,
               loader: "html-loader",
               options: {
                 minimize: false,
@@ -205,7 +204,9 @@ function setMode(env) {
               use: [
                 {
                   loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: "../../" }
+                  options: {
+                    publicPath: "../../"
+                  }
                 },
                 {
                   loader: "css-loader",
@@ -231,7 +232,9 @@ function setMode(env) {
               use: [
                 {
                   loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: "../../" }
+                  options: {
+                    publicPath: "../../"
+                  }
                 },
                 {
                   loader: "css-loader",
