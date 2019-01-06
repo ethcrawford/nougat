@@ -3,6 +3,8 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PostcssFlexbugsFixes = require("postcss-flexbugs-fixes");
+const Autoprefixer = require("autoprefixer");
 
 const paths = {
   build: resolve(__dirname, "build")
@@ -37,7 +39,26 @@ function setMode(env) {
               },
               {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+                use: [
+                  "style-loader",
+                  {
+                    loader: "css-loader",
+                    options: {
+                      importLoaders: 1
+                    }
+                  },
+                  {
+                    loader: "postcss-loader",
+                    options: {
+                      plugins: [
+                        PostcssFlexbugsFixes(),
+                        Autoprefixer({
+                          flexbox: "no-2009"
+                        })
+                      ]
+                    }
+                  }
+                ]
               },
               {
                 test: /\.scss$/,
@@ -46,7 +67,18 @@ function setMode(env) {
                   {
                     loader: "css-loader",
                     options: {
-                      importLoaders: 1
+                      importLoaders: 2
+                    }
+                  },
+                  {
+                    loader: "postcss-loader",
+                    options: {
+                      plugins: [
+                        PostcssFlexbugsFixes(),
+                        Autoprefixer({
+                          flexbox: "no-2009"
+                        })
+                      ]
                     }
                   },
                   "sass-loader"
@@ -115,7 +147,23 @@ function setMode(env) {
                   loader: MiniCssExtractPlugin.loader,
                   options: { publicPath: "../../" }
                 },
-                "css-loader"
+                {
+                  loader: "css-loader",
+                  options: {
+                    importLoaders: 1
+                  }
+                },
+                {
+                  loader: "postcss-loader",
+                  options: {
+                    plugins: [
+                      PostcssFlexbugsFixes(),
+                      Autoprefixer({
+                        flexbox: "no-2009"
+                      })
+                    ]
+                  }
+                }
               ]
             },
             {
@@ -128,7 +176,18 @@ function setMode(env) {
                 {
                   loader: "css-loader",
                   options: {
-                    importLoaders: 1
+                    importLoaders: 2
+                  }
+                },
+                {
+                  loader: "postcss-loader",
+                  options: {
+                    plugins: [
+                      PostcssFlexbugsFixes(),
+                      Autoprefixer({
+                        flexbox: "no-2009"
+                      })
+                    ]
                   }
                 },
                 "sass-loader"
