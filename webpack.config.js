@@ -13,6 +13,8 @@ const paths = {
   build: resolve(__dirname, "build")
 };
 
+const shouldUseSoftHtmlProcessMode = true;
+
 function setMode(env) {
   if (env === "development") {
     return {
@@ -116,20 +118,23 @@ function setMode(env) {
       ]
     };
   }
-  const minHtmlConfig = {
-    removeComments: true,
-    collapseWhitespace: false,
-    removeRedundantAttributes: true,
-    caseSensitive: true,
-    useShortDoctype: true,
-    removeEmptyAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    keepClosingSlash: false,
-    sortAttributes: true,
-    sortClassName: true,
-    minifyJS: true,
-    minifyCSS: true,
-    minifyURLs: true
+  function setHtmlProcessMode(isSoftMode) {
+    if (isSoftMode) {
+      return {
+        minifyCSS: true,
+        minifyJS: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true
+      };
+    }
+    return {
+      collapseWhitespace: true,
+      minifyCSS: true,
+      minifyJS: true,
+      removeComments: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true
+    };
   };
   return {
     mode: "production",
@@ -272,7 +277,7 @@ function setMode(env) {
         template: resolve(__dirname, "src/index.html"),
         filename: "index.html",
         title: "",
-        minify: minHtmlConfig
+        minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode)
       }),
       new MiniCssExtractPlugin({
         filename: "static/css/[name].[contenthash:8].css",
