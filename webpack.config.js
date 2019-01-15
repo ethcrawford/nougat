@@ -135,7 +135,7 @@ function setMode(env) {
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true
     };
-  };
+  }
   return {
     mode: "production",
     devtool: "source-map",
