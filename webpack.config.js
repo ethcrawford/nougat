@@ -36,13 +36,6 @@ function setMode(env) {
           {
             oneOf: [
               {
-                test: /\.html$/,
-                loader: "html-loader",
-                options: {
-                  attrs: ["img:src", "link:href", ":data-src"]
-                }
-              },
-              {
                 test: /\.js$/,
                 exclude: /^node_modules\//,
                 loader: "babel-loader",
@@ -186,14 +179,6 @@ function setMode(env) {
       rules: [
         {
           oneOf: [
-            {
-              test: /\.html$/,
-              loader: "html-loader",
-              options: {
-                minimize: false,
-                attrs: ["img:src", "link:href", ":data-src"]
-              }
-            },
             {
               test: /\.js$/,
               exclude: /^node_modules\//,
