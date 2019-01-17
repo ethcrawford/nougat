@@ -1,8 +1,15 @@
-# Wrapping Paper
+<div style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/375/375614.svg" alt="Nougat" width="260"></div>
+
+# Nougat
 
 Stub project with Webpack configuration to develop a simple static interface.
-Supports Babel, Sass and Autoprefixer. Convenient work with customization
-Bootstrap 4.
+
+## Supported:
+
+- Babel - @babel/preset-env
+- Sass - SCSS syntax
+- Autoprefixer - bootstrap 4 browserslist in package.json
+- Bootstrap 4 customization
 
 ## Features
 
@@ -18,12 +25,85 @@ Bootstrap 4.
 - `yarn start` - Start webpack-dev-server
 - `yarn build` - Run production build
 
+## Examples
+
+### Adding an HTML template to the Webpack configuration
+
+`webpack.config.js`
+
+```js
+...
+plugins: [
+  ...
+  new HtmlWebpackPlugin({
+    template: resolve(__dirname, "src/index.html"),
+    filename: "index.html",
+    title: "",
+  }),
+  // First place
+  new HtmlWebpackPlugin({
+    template: resolve(__dirname, "src/another-template.html"),
+    filename: "another-template.html",
+    title: "",
+  }),
+  ...
+],
+...
+plugins: [
+  new HtmlWebpackPlugin({
+    template: resolve(__dirname, "src/index.html"),
+    filename: "index.html",
+    title: "",
+    minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode),
+  }),
+  // Second place
+  new HtmlWebpackPlugin({
+    template: resolve(__dirname, "src/another-template.html"),
+    filename: "another-template.html",
+    title: "",
+    minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode),
+  }),
+  ...
+],
+```
+
+### Requiring things
+
+*Stylesheets are resolved automatically.*
+
+#### Example 1
+
+`template.html`
+
+Requiring:
+
+```html
+<img class="img-fluid" src="<%= require('./path/to/image.jpg') %>" alt="example">
+```
+
+Result after production build:
+
+```html
+<img class="img-fluid" src="./static/media/image.[hash].jpg" alt="example">
+```
+
+#### Example 2
+```html
+<div style="background: center center url(<%= require('./path/to/image.png') %>) no-repeat"></div>
+```
+
+compiles to:
+
+```html
+<div style="background: center center url(./static/media/image.[hash].png) no-repeat"></div>
+```
+
 ## Folder stucture
 
 Describe all `.html` files in `webpack.config.js` in the same way as
 `index.html` is specified.
 
-```
+```txt
 +-- build
 |   +-- static
 |   |   +-- css
