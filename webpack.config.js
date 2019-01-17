@@ -10,7 +10,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const paths = {
-  build: resolve(__dirname, "build")
+  build: resolve(__dirname, "build"),
 };
 
 const shouldUseSoftHtmlProcessMode = true;
@@ -25,11 +25,11 @@ function setMode(env) {
         path: paths.build,
         filename: "static/js/[name].js",
         chunkFilename: "static/js/[name].chunk.js",
-        publicPath: "/"
+        publicPath: "/",
       },
       devServer: {
         port: 9000,
-        contentBase: paths.build
+        contentBase: paths.build,
       },
       module: {
         rules: [
@@ -41,8 +41,8 @@ function setMode(env) {
                 loader: "babel-loader",
                 options: {
                   cacheDirectory: true,
-                  cacheCompression: false
-                }
+                  cacheCompression: false,
+                },
               },
               {
                 test: /\.css$/,
@@ -51,8 +51,8 @@ function setMode(env) {
                   {
                     loader: "css-loader",
                     options: {
-                      importLoaders: 1
-                    }
+                      importLoaders: 1,
+                    },
                   },
                   {
                     loader: "postcss-loader",
@@ -60,12 +60,12 @@ function setMode(env) {
                       plugins: [
                         PostcssFlexbugsFixes(),
                         Autoprefixer({
-                          flexbox: "no-2009"
-                        })
-                      ]
-                    }
-                  }
-                ]
+                          flexbox: "no-2009",
+                        }),
+                      ],
+                    },
+                  },
+                ],
               },
               {
                 test: /\.scss$/,
@@ -74,8 +74,8 @@ function setMode(env) {
                   {
                     loader: "css-loader",
                     options: {
-                      importLoaders: 2
-                    }
+                      importLoaders: 2,
+                    },
                   },
                   {
                     loader: "postcss-loader",
@@ -83,32 +83,32 @@ function setMode(env) {
                       plugins: [
                         PostcssFlexbugsFixes(),
                         Autoprefixer({
-                          flexbox: "no-2009"
-                        })
-                      ]
-                    }
+                          flexbox: "no-2009",
+                        }),
+                      ],
+                    },
                   },
-                  "sass-loader"
-                ]
+                  "sass-loader",
+                ],
               },
               {
                 exclude: [/\.js$/, /\.html$/, /\.json$/],
                 loader: "file-loader",
                 options: {
-                  name: "static/media/[name].[hash:8].[ext]"
-                }
-              }
-            ]
-          }
-        ]
+                  name: "static/media/[name].[hash:8].[ext]",
+                },
+              },
+            ],
+          },
+        ],
       },
       plugins: [
         new HtmlWebpackPlugin({
           template: resolve(__dirname, "src/index.html"),
           filename: "index.html",
-          title: ""
-        })
-      ]
+          title: "",
+        }),
+      ],
     };
   }
   function setHtmlProcessMode(isSoftMode) {
@@ -117,7 +117,7 @@ function setMode(env) {
         minifyCSS: true,
         minifyJS: true,
         removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true
+        removeStyleLinkTypeAttributes: true,
       };
     }
     return {
@@ -126,7 +126,7 @@ function setMode(env) {
       minifyJS: true,
       removeComments: true,
       removeScriptTypeAttributes: true,
-      removeStyleLinkTypeAttributes: true
+      removeStyleLinkTypeAttributes: true,
     };
   }
   return {
@@ -137,43 +137,43 @@ function setMode(env) {
       path: paths.build,
       filename: "static/js/[name].[chunkhash:8].js",
       chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
-      publicPath: "./"
+      publicPath: "./",
     },
     optimization: {
       minimizer: [
         new TerserPlugin({
           terserOptions: {
             parse: {
-              ecma: 8
+              ecma: 8,
             },
             compress: {
               ecma: 5,
               warnings: false,
               comparisons: false,
-              inline: 2
+              inline: 2,
             },
             mangle: {
-              safari10: true
+              safari10: true,
             },
             output: {
               ecma: 5,
               comments: false,
-              ascii_only: true
-            }
+              ascii_only: true,
+            },
           },
           parallel: true,
           cache: true,
-          sourceMap: true
+          sourceMap: true,
         }),
         new OptimizeCssAssetsPlugin({
           cssProcessorOptions: {
             map: {
               inline: false,
-              annotation: true
-            }
-          }
-        })
-      ]
+              annotation: true,
+            },
+          },
+        }),
+      ],
     },
     module: {
       rules: [
@@ -186,8 +186,8 @@ function setMode(env) {
               options: {
                 cacheDirectory: true,
                 cacheCompression: true,
-                compact: true
-              }
+                compact: true,
+              },
             },
             {
               test: /\.css$/,
@@ -195,14 +195,14 @@ function setMode(env) {
                 {
                   loader: MiniCssExtractPlugin.loader,
                   options: {
-                    publicPath: "../../"
-                  }
+                    publicPath: "../../",
+                  },
                 },
                 {
                   loader: "css-loader",
                   options: {
-                    importLoaders: 1
-                  }
+                    importLoaders: 1,
+                  },
                 },
                 {
                   loader: "postcss-loader",
@@ -210,12 +210,12 @@ function setMode(env) {
                     plugins: [
                       PostcssFlexbugsFixes(),
                       Autoprefixer({
-                        flexbox: "no-2009"
-                      })
-                    ]
-                  }
-                }
-              ]
+                        flexbox: "no-2009",
+                      }),
+                    ],
+                  },
+                },
+              ],
             },
             {
               test: /\.scss$/,
@@ -223,14 +223,14 @@ function setMode(env) {
                 {
                   loader: MiniCssExtractPlugin.loader,
                   options: {
-                    publicPath: "../../"
-                  }
+                    publicPath: "../../",
+                  },
                 },
                 {
                   loader: "css-loader",
                   options: {
-                    importLoaders: 2
-                  }
+                    importLoaders: 2,
+                  },
                 },
                 {
                   loader: "postcss-loader",
@@ -238,40 +238,40 @@ function setMode(env) {
                     plugins: [
                       PostcssFlexbugsFixes(),
                       Autoprefixer({
-                        flexbox: "no-2009"
-                      })
-                    ]
-                  }
+                        flexbox: "no-2009",
+                      }),
+                    ],
+                  },
                 },
-                "sass-loader"
-              ]
+                "sass-loader",
+              ],
             },
             {
               exclude: [/\.js$/, /\.html$/, /\.json$/],
               loader: "file-loader",
               options: {
-                name: "static/media/[name].[hash:8].[ext]"
-              }
-            }
-          ]
-        }
-      ]
+                name: "static/media/[name].[hash:8].[ext]",
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: resolve(__dirname, "src/index.html"),
         filename: "index.html",
         title: "",
-        minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode)
+        minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode),
       }),
       new MiniCssExtractPlugin({
         filename: "static/css/[name].[contenthash:8].css",
-        chunkFilename: "static/css/[name].[contenthash:8].chunk.css"
+        chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
       }),
       new ManifestPlugin({
-        fileName: "assets-manifest.json"
-      })
-    ]
+        fileName: "assets-manifest.json",
+      }),
+    ],
   };
 }
 
