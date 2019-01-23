@@ -1,6 +1,6 @@
 <img src="src/img/nougat-logo.png" alt="Nougat" width="230">
 
-# Nougat
+# Nougat [![Known Vulnerabilities](https://snyk.io/test/github/ethcrawford/nougat/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ethcrawford/nougat?targetFile=package.json)
 
 Stub project with Webpack configuration to develop a simple static interface.
 
