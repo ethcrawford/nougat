@@ -96,6 +96,14 @@ function setMode(env) {
                 ],
               },
               {
+                test: /\.svg$/,
+                include: paths.merge,
+                loader: "svg-sprite-loader",
+                options: {
+                  extract: false,
+                },
+              },
+              {
                 exclude: [/\.js$/, /\.html$/, /\.json$/],
                 loader: "file-loader",
                 options: {
@@ -267,6 +275,14 @@ function setMode(env) {
                 },
                 "sass-loader",
               ],
+            },
+            {
+              test: /\.svg$/,
+              include: paths.merge,
+              loader: "svg-sprite-loader",
+              options: {
+                extract: false,
+              },
             },
             {
               exclude: [/\.js$/, /\.html$/, /\.json$/],
