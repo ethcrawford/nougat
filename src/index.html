@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Nougat</title>
+    <title>Hello, Nougat!</title>
   </head>
   <body>
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-    <main class="pt-4 text-center" id="content">
-      <img class="mb-2" src="https://image.flaticon.com/icons/svg/375/375614.svg" alt="Nougat" width="260">
-      <h1 class="display-4">Hello, Nougat!</h1>
+    <main id="content">
+      <div class="container-fluid pt-3">
+        <div class="mb-3" style="width: 230px;">
+          <a href="https://github.com/ethcrawford/nougat" title="Nougat on GitHub">
+            <img class="img-fluid" src="<%= require('./img/nougat-logo.png') %>" alt="Nougat">
+          </a>
+        </div>
+        <h1 class="display-4">Hello, Nougat!</h1>
+        <p class="lead">Stub project with Webpack configuration to develop a simple static interface.</p>
+        <small>by <a href="https://github.com/ethcrawford" title="Author">Ethan Crawford</a>, 2019. <a href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a></small>
+      </div>
     </main>
   </body>
 </html>

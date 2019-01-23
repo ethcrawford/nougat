@@ -1,4 +1,4 @@
-<img src="https://image.flaticon.com/icons/svg/375/375614.svg" alt="Nougat" width="200">
+<img src="src/img/nougat-logo.png" alt="Nougat" width="230">
 
 # Nougat
 
