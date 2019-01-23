@@ -2,17 +2,17 @@
 
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PostcssFlexbugsFixes = require("postcss-flexbugs-fixes");
-const Autoprefixer = require("autoprefixer");
-const ManifestPlugin = require("webpack-manifest-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const SpritesmithPlugin = require("webpack-spritesmith");
-const imageminGifsicle = require("imagemin-gifsicle");
-const imageminMozJPEG = require("imagemin-mozjpeg");
-const imageminOptiPNG = require("imagemin-optipng");
-const imageminSVGO = require("imagemin-svgo");
+const MiniCssExtractWebpackPlugin = require("mini-css-extract-plugin");
+const ManifestWebpackPlugin = require("webpack-manifest-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
+const SpritesmithWebpackPlugin = require("webpack-spritesmith");
+const flexbugsFixesPostcssPlugin = require("postcss-flexbugs-fixes");
+const autoprefixerPostcssPlugin = require("autoprefixer");
+const gifsicleImageminPlugin = require("imagemin-gifsicle");
+const mozjpegImageminPlugin = require("imagemin-mozjpeg");
+const optipngImageminPlugin = require("imagemin-optipng");
+const svgoImageminPlugin = require("imagemin-svgo");
 
 const paths = {
   build: resolve(__dirname, "build"),
@@ -66,8 +66,8 @@ function setMode(env) {
                     loader: "postcss-loader",
                     options: {
                       plugins: [
-                        PostcssFlexbugsFixes(),
-                        Autoprefixer({
+                        flexbugsFixesPostcssPlugin(),
+                        autoprefixerPostcssPlugin({
                           flexbox: "no-2009",
                         }),
                       ],
@@ -89,8 +89,8 @@ function setMode(env) {
                     loader: "postcss-loader",
                     options: {
                       plugins: [
-                        PostcssFlexbugsFixes(),
-                        Autoprefixer({
+                        flexbugsFixesPostcssPlugin(),
+                        autoprefixerPostcssPlugin({
                           flexbox: "no-2009",
                         }),
                       ],
@@ -124,7 +124,7 @@ function setMode(env) {
           filename: "index.html",
           title: "",
         }),
-        new SpritesmithPlugin({
+        new SpritesmithWebpackPlugin({
           src: {
             cwd: paths.merge,
             glob: "*.png",
@@ -175,7 +175,7 @@ function setMode(env) {
     },
     optimization: {
       minimizer: [
-        new TerserPlugin({
+        new TerserWebpackPlugin({
           terserOptions: {
             parse: {
               ecma: 8,
@@ -199,7 +199,7 @@ function setMode(env) {
           cache: true,
           sourceMap: true,
         }),
-        new OptimizeCssAssetsPlugin({
+        new OptimizeCssAssetsWebpackPlugin({
           cssProcessorOptions: {
             map: {
               inline: false,
@@ -227,7 +227,7 @@ function setMode(env) {
               test: /\.css$/,
               use: [
                 {
-                  loader: MiniCssExtractPlugin.loader,
+                  loader: MiniCssExtractWebpackPlugin.loader,
                   options: {
                     publicPath: "../../",
                   },
@@ -242,8 +242,8 @@ function setMode(env) {
                   loader: "postcss-loader",
                   options: {
                     plugins: [
-                      PostcssFlexbugsFixes(),
-                      Autoprefixer({
+                      flexbugsFixesPostcssPlugin(),
+                      autoprefixerPostcssPlugin({
                         flexbox: "no-2009",
                       }),
                     ],
@@ -255,7 +255,7 @@ function setMode(env) {
               test: /\.scss$/,
               use: [
                 {
-                  loader: MiniCssExtractPlugin.loader,
+                  loader: MiniCssExtractWebpackPlugin.loader,
                   options: {
                     publicPath: "../../",
                   },
@@ -270,8 +270,8 @@ function setMode(env) {
                   loader: "postcss-loader",
                   options: {
                     plugins: [
-                      PostcssFlexbugsFixes(),
-                      Autoprefixer({
+                      flexbugsFixesPostcssPlugin(),
+                      autoprefixerPostcssPlugin({
                         flexbox: "no-2009",
                       }),
                     ],
@@ -293,13 +293,13 @@ function setMode(env) {
                 {
                   loader: "img-loader",
                   options: {
-                    plugins: [imageminSVGO({})],
+                    plugins: [svgoImageminPlugin()],
                   },
                 },
               ],
             },
             {
-              test: [/\.jpe?g/, /\.png$/, /\.gif$/, /\.svg$/],
+              test: [/\.gif$/, /\.jpe?g/, /\.png$/, /\.svg$/],
               use: [
                 {
                   loader: "file-loader",
@@ -311,10 +311,10 @@ function setMode(env) {
                   loader: "img-loader",
                   options: {
                     plugins: [
-                      imageminGifsicle({}),
-                      imageminMozJPEG({}),
-                      imageminOptiPNG({}),
-                      imageminSVGO({}),
+                      gifsicleImageminPlugin(),
+                      mozjpegImageminPlugin(),
+                      optipngImageminPlugin(),
+                      svgoImageminPlugin(),
                     ],
                   },
                 },
@@ -338,7 +338,7 @@ function setMode(env) {
         title: "",
         minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode),
       }),
-      new SpritesmithPlugin({
+      new SpritesmithWebpackPlugin({
         src: {
           cwd: paths.merge,
           glob: "*.png",
@@ -356,11 +356,11 @@ function setMode(env) {
         retina: "@2x",
         logCreatedFiles: true,
       }),
-      new MiniCssExtractPlugin({
+      new MiniCssExtractWebpackPlugin({
         filename: "static/css/[name].[contenthash:8].css",
         chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
       }),
-      new ManifestPlugin({
+      new ManifestWebpackPlugin({
         fileName: "assets-manifest.json",
       }),
     ],
