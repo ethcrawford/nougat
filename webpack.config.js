@@ -18,7 +18,7 @@ const paths = {
   build: resolve(__dirname, "build"),
   merge: resolve(__dirname, "src/merge"),
   spritesmithSprite: resolve(__dirname, "src/img/spritesmith-sprite.png"),
-  spritesmithStylesheet: resolve(__dirname, "src/spritesmith-stylesheet.scss"),
+  spritesmithStylesheet: resolve(__dirname, "src/_spritesmith-stylesheet.scss"),
 };
 
 const shouldUseSoftHtmlProcessMode = true;
