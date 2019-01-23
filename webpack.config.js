@@ -8,9 +8,13 @@ const Autoprefixer = require("autoprefixer");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const SpritesmithPlugin = require("webpack-spritesmith");
 
 const paths = {
   build: resolve(__dirname, "build"),
+  merge: resolve(__dirname, "src/merge"),
+  spritesmithSprite: resolve(__dirname, "src/img/spritesmith-sprite.png"),
+  spritesmithStylesheet: resolve(__dirname, "src/spritesmith-stylesheet.scss"),
 };
 
 const shouldUseSoftHtmlProcessMode = true;
@@ -107,6 +111,24 @@ function setMode(env) {
           template: resolve(__dirname, "src/index.html"),
           filename: "index.html",
           title: "",
+        }),
+        new SpritesmithPlugin({
+          src: {
+            cwd: paths.merge,
+            glob: "*.png",
+          },
+          target: {
+            image: paths.spritesmithSprite,
+            css: paths.spritesmithStylesheet,
+          },
+          apiOptions: {
+            cssImageRef: "img/spritesmith-sprite.png",
+          },
+          spritesmithOptions: {
+            padding: 4,
+          },
+          retina: "@2x",
+          logCreatedFiles: true,
         }),
       ],
     };
@@ -263,6 +285,24 @@ function setMode(env) {
         filename: "index.html",
         title: "",
         minify: setHtmlProcessMode(shouldUseSoftHtmlProcessMode),
+      }),
+      new SpritesmithPlugin({
+        src: {
+          cwd: paths.merge,
+          glob: "*.png",
+        },
+        target: {
+          image: paths.spritesmithSprite,
+          css: paths.spritesmithStylesheet,
+        },
+        apiOptions: {
+          cssImageRef: "img/spritesmith-sprite.png",
+        },
+        spritesmithOptions: {
+          padding: 4,
+        },
+        retina: "@2x",
+        logCreatedFiles: true,
       }),
       new MiniCssExtractPlugin({
         filename: "static/css/[name].[contenthash:8].css",

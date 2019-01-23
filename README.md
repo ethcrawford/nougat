@@ -17,8 +17,6 @@ Stub project with Webpack configuration to develop a simple static interface.
   old names is attached.
 - Linters are not installed, as it is assumed
   that they are integrated into the code editor.
-- Image and sprite processors are
-  not present so as not to clutter up the project, they can be used separately.
 
 ## Scripts
 
