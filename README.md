@@ -1,6 +1,10 @@
 <img src="src/img/nougat-logo.png" alt="Nougat" width="230">
 
-# Nougat [![Known Vulnerabilities](https://snyk.io/test/github/ethcrawford/nougat/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ethcrawford/nougat?targetFile=package.json)
+# Nougat
+
+[![Known Vulnerabilities](https://snyk.io/test/github/ethcrawford/nougat/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ethcrawford/nougat?targetFile=package.json)
+[![Dependency Status](https://david-dm.org/ethcrawford/nougat.svg)](https://david-dm.org/ethcrawford/nougat)
+[![Development Dependency Status](https://david-dm.org/ethcrawford/nougat/dev-status.svg)](https://david-dm.org/ethcrawford/nougat#info=devDependencies)
 
 Stub project with Webpack configuration to develop a simple static interface.
 
@@ -67,7 +71,7 @@ plugins: [
 
 ### Requiring things
 
-*Stylesheets are resolved automatically.*
+_Stylesheets are resolved automatically._
 
 #### Example 1
 
@@ -76,24 +80,33 @@ plugins: [
 Requiring:
 
 ```html
-<img class="img-fluid" src="<%= require('./path/to/image.jpg') %>" alt="example">
+<img
+  class="img-fluid"
+  src="<%= require('./path/to/image.jpg') %>"
+  alt="example"
+/>
 ```
 
 Result after production build:
 
 ```html
-<img class="img-fluid" src="./static/media/image.[hash].jpg" alt="example">
+<img class="img-fluid" src="./static/media/image.[hash].jpg" alt="example" />
 ```
 
 #### Example 2
+
 ```html
-<div style="background: center center url(<%= require('./path/to/image.png') %>) no-repeat"></div>
+<div
+  style="background: center center url(<%= require('./path/to/image.png') %>) no-repeat"
+></div>
 ```
 
 compiles to:
 
 ```html
-<div style="background: center center url(./static/media/image.[hash].png) no-repeat"></div>
+<div
+  style="background: center center url(./static/media/image.[hash].png) no-repeat"
+></div>
 ```
 
 ## Folder stucture
@@ -153,5 +166,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"          title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
