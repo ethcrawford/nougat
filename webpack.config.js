@@ -9,6 +9,10 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const SpritesmithPlugin = require("webpack-spritesmith");
+const imageminGifsicle = require("imagemin-gifsicle");
+const imageminMozJPEG = require("imagemin-mozjpeg");
+const imageminOptiPNG = require("imagemin-optipng");
+const imageminSVGO = require("imagemin-svgo");
 
 const paths = {
   build: resolve(__dirname, "build"),
@@ -279,10 +283,42 @@ function setMode(env) {
             {
               test: /\.svg$/,
               include: paths.merge,
-              loader: "svg-sprite-loader",
-              options: {
-                extract: false,
-              },
+              use: [
+                {
+                  loader: "svg-sprite-loader",
+                  options: {
+                    extract: false,
+                  },
+                },
+                {
+                  loader: "img-loader",
+                  options: {
+                    plugins: [imageminSVGO({})],
+                  },
+                },
+              ],
+            },
+            {
+              test: [/\.jpe?g/, /\.png$/, /\.gif$/, /\.svg$/],
+              use: [
+                {
+                  loader: "file-loader",
+                  options: {
+                    name: "static/media/[name].[hash:8].[ext]",
+                  },
+                },
+                {
+                  loader: "img-loader",
+                  options: {
+                    plugins: [
+                      imageminGifsicle({}),
+                      imageminMozJPEG({}),
+                      imageminOptiPNG({}),
+                      imageminSVGO({}),
+                    ],
+                  },
+                },
+              ],
             },
             {
               exclude: [/\.js$/, /\.html$/, /\.json$/],
