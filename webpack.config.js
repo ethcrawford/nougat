@@ -17,7 +17,10 @@ const svgoImageminPlugin = require("imagemin-svgo");
 const paths = {
   build: resolve(__dirname, "build"),
   merge: resolve(__dirname, "src/merge"),
-  spritesmithSprite: resolve(__dirname, "src/img/spritesmith-sprite.png"),
+  spritesmithSpritesheet: resolve(
+    __dirname,
+    "src/img/spritesmith-spritesheet.png"
+  ),
   scssSpritesmithStylesheet: resolve(
     __dirname,
     "src/_spritesmith-stylesheet.scss"
@@ -141,7 +144,7 @@ function setMode(env) {
             glob: "*.png",
           },
           target: {
-            image: paths.spritesmithSprite,
+            image: paths.spritesmithSpritesheet,
             css: [
               [
                 paths.scssSpritesmithStylesheet,
@@ -150,7 +153,7 @@ function setMode(env) {
             ],
           },
           apiOptions: {
-            cssImageRef: "img/spritesmith-sprite.png",
+            cssImageRef: "img/spritesmith-spritesheet.png",
           },
           spritesmithOptions: {
             padding: 4,
@@ -365,7 +368,7 @@ function setMode(env) {
           glob: "*.png",
         },
         target: {
-          image: paths.spritesmithSprite,
+          image: paths.spritesmithSpritesheet,
           css: [
             [
               paths.scssSpritesmithStylesheet,
@@ -374,7 +377,7 @@ function setMode(env) {
           ],
         },
         apiOptions: {
-          cssImageRef: "img/spritesmith-sprite.png",
+          cssImageRef: "img/spritesmith-spritesheet.png",
         },
         spritesmithOptions: {
           padding: 4,

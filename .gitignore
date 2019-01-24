@@ -1,5 +1,5 @@
 node_modules/
 build/
-src/img/spritesmith-sprite@2x.png
-src/img/spritesmith-sprite.png
+src/img/spritesmith-spritesheet@2x.png
+src/img/spritesmith-spritesheet.png
 src/_spritesmith-stylesheet.scss
