@@ -18,7 +18,18 @@ const paths = {
   build: resolve(__dirname, "build"),
   merge: resolve(__dirname, "src/merge"),
   spritesmithSprite: resolve(__dirname, "src/img/spritesmith-sprite.png"),
-  spritesmithStylesheet: resolve(__dirname, "src/_spritesmith-stylesheet.scss"),
+  scssSpritesmithStylesheet: resolve(
+    __dirname,
+    "src/_spritesmith-stylesheet.scss"
+  ),
+  scssSpritesmithTemplate: resolve(
+    __dirname,
+    "src/scss-spritesmith-template.handlebars"
+  ),
+  scssSpritesmithTemplateRetina: resolve(
+    __dirname,
+    "src/scss-spritesmith-template-retina.handlebars"
+  ),
 };
 
 const shouldUseSoftHtmlProcessMode = true;
@@ -131,7 +142,12 @@ function setMode(env) {
           },
           target: {
             image: paths.spritesmithSprite,
-            css: paths.spritesmithStylesheet,
+            css: [
+              [
+                paths.scssSpritesmithStylesheet,
+                { format: "scss_spritesmith_template" },
+              ],
+            ],
           },
           apiOptions: {
             cssImageRef: "img/spritesmith-sprite.png",
@@ -140,6 +156,11 @@ function setMode(env) {
             padding: 4,
           },
           retina: "@2x",
+          customTemplates: {
+            scss_spritesmith_template: paths.scssSpritesmithTemplate,
+            scss_spritesmith_template_retina:
+              paths.scssSpritesmithTemplateRetina,
+          },
           logCreatedFiles: true,
         }),
       ],
@@ -345,7 +366,12 @@ function setMode(env) {
         },
         target: {
           image: paths.spritesmithSprite,
-          css: paths.spritesmithStylesheet,
+          css: [
+            [
+              paths.scssSpritesmithStylesheet,
+              { format: "scss_spritesmith_template" },
+            ],
+          ],
         },
         apiOptions: {
           cssImageRef: "img/spritesmith-sprite.png",
@@ -354,6 +380,10 @@ function setMode(env) {
           padding: 4,
         },
         retina: "@2x",
+        customTemplates: {
+          scss_spritesmith_template: paths.scssSpritesmithTemplate,
+          scss_spritesmith_template_retina: paths.scssSpritesmithTemplateRetina,
+        },
         logCreatedFiles: true,
       }),
       new MiniCssExtractWebpackPlugin({
