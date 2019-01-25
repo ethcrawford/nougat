@@ -98,7 +98,7 @@ $sprite-groups: (
 // CSS classes.
 
 @mixin sprite-background-size($sprite-type) {
-  @if $sprite-type = "normal" {
+  @if $sprite-type == "normal" {
     background-size: $spritesheet-width $spritesheet-height;
   } @else {
     background-size: $spritesheet-width-retina $spritesheet-height-retina;
@@ -111,7 +111,7 @@ $sprite-groups: (
   @include sprite($sprite-normal);
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    @include sprite-image($sprite-retina);
+    background-image: url(#{$spritesheet-url-retina});
     @include sprite-background-size("normal");
   }
 }
