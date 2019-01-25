@@ -1,116 +1,144 @@
 {
-  // Default options
-  'functions': true,
-  'variableNameTransforms': ['dasherize']
+  functions: true,
+  variableNameTransforms: ["dasherize"],
 }
 
 {{#block "sprites-comment"}}
-// SCSS variables are information about icon's compiled state, stored under its original file name
+// Sprites
 //
-// .icon-home {
-//   width: $icon-home-width;
-// }
+// Below are the blocks generated from the template unique variables Sass,
+// which store information about each image (sprite) used in the spritesheet.
 //
-// The large array-like variables contain all information about a single icon
-// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+// The name of each variable is created using the formula:
+// `$component-state-property-size`.
 //
-// At the bottom of this section, we provide information about the spritesheet itself
-// $spritesheet: width height image $spritesheet-sprites;
+// Example: `$sprite-biscuit-width`.
+//
+// The "sprite-" prefix added to create the namespace and the unique name of
+// the sprite together form a component, and "width" corresponds to
+// the "property".
+//
+// Unique names, such as `biscuit`, are taken from the file names that were
+// used to create the spritesheet.
+//
+// At the end of each block, single variables are collected into a map for
+// further use in mixins.
+
 {{/block}}
 {{#block "sprites"}}
 {{#each sprites}}
-${{strings.name_name}}: '{{name}}';
-${{strings.name_x}}: {{px.x}};
-${{strings.name_y}}: {{px.y}};
-${{strings.name_offset_x}}: {{px.offset_x}};
-${{strings.name_offset_y}}: {{px.offset_y}};
-${{strings.name_width}}: {{px.width}};
-${{strings.name_height}}: {{px.height}};
-${{strings.name_total_width}}: {{px.total_width}};
-${{strings.name_total_height}}: {{px.total_height}};
-${{strings.name_image}}: '{{{escaped_image}}}';
-${{strings.name}}: ({{px.x}}, {{px.y}}, {{px.offset_x}}, {{px.offset_y}}, {{px.width}}, {{px.height}}, {{px.total_width}}, {{px.total_height}}, '{{{escaped_image}}}', '{{name}}', );
+$sprite-{{strings.name_name}}: "sprite-{{name}}";
+$sprite-{{strings.name_x}}: {{px.x}};
+$sprite-{{strings.name_y}}: {{px.y}};
+$sprite-{{strings.name_offset_x}}: {{px.offset_x}};
+$sprite-{{strings.name_offset_y}}: {{px.offset_y}};
+$sprite-{{strings.name_width}}: {{px.width}};
+$sprite-{{strings.name_height}}: {{px.height}};
+$sprite-{{strings.name}}: ();
+$sprite-{{strings.name}}: map-merge(
+  (
+    "name": $sprite-{{strings.name_name}},
+    "x": $sprite-{{strings.name_x}},
+    "y": $sprite-{{strings.name_y}},
+    "offset-x": $sprite-{{strings.name_offset_x}},
+    "offset-y": $sprite-{{strings.name_offset_y}},
+    "width": $sprite-{{strings.name_width}},
+    "height": $sprite-{{strings.name_height}},
+  ),
+  $sprite-{{strings.name}}
+);
+
 {{/each}}
 {{/block}}
 {{#block "spritesheet"}}
-${{spritesheet_info.strings.name_width}}: {{spritesheet.px.width}};
-${{spritesheet_info.strings.name_height}}: {{spritesheet.px.height}};
-${{spritesheet_info.strings.name_image}}: '{{{spritesheet.escaped_image}}}';
-${{spritesheet_info.strings.name_sprites}}: ({{#each sprites}}${{strings.name}}, {{/each}});
-${{spritesheet_info.strings.name}}: ({{spritesheet.px.width}}, {{spritesheet.px.height}}, '{{{spritesheet.escaped_image}}}', ${{spritesheet_info.strings.name_sprites}}, );
-{{/block}}
+// Spritesheet
+//
+// Below is information about the spritesheet.
 
+$spritesheet-width: {{spritesheet.px.width}};
+$spritesheet-height: {{spritesheet.px.height}};
+$spritesheet-url: "{{{spritesheet.escaped_image}}}";
+$spritesheet-sprites: (
+  {{#each sprites}}
+  {{#unless @last}}
+  $sprite-{{strings.name}},
+  {{else}}
+  $sprite-{{strings.name}}
+  {{/unless}}
+  {{/each}}
+);
+$spritesheet: ();
+$spritesheet: map-merge(
+  (
+    "width": $spritesheet-width,
+    "height": $spritesheet-height,
+    "url": $spritesheet-url,
+    "sprites": $spritesheet-sprites,
+  ),
+  $spritesheet
+);
+{{/block}}
 {{#block "sprite-functions-comment"}}
 {{#if options.functions}}
-// The provided mixins are intended to be used with the array-like variables
+
+// Sprite mixins
 //
-// .icon-home {
-//   @include sprite-width($icon-home);
-// }
+// The following mixins insert full or partial information about a separate
+// sprite. They all have talking names. Use them inside your CSS classes.
 //
-// .icon-email {
-//   @include sprite($icon-email);
-// }
+// In four of five cases, it is necessary to pass an input parameter - a sprite
+// variable, which is a map. Such variables are declared above and have
+// the following form `$sprite-something`, where `something` is the generated
+// name.
 //
-// Example usage in HTML:
-//
-// `display: block` sprite:
-// <div class="icon-home"></div>
-//
-// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
-//
-// // CSS
-// .icon {
-//   display: inline-block;
-// }
-//
-// // HTML
-// <i class="icon icon-home"></i>
+// The mixin `sprite-image` does not need a parameter, it simply insert
+// a common `background-image`.
+
 {{/if}}
 {{/block}}
 {{#block "sprite-functions"}}
 {{#if options.functions}}
 @mixin sprite-width($sprite) {
-  width: nth($sprite, 5);
+  width: map-get($sprite, "width");
 }
 
 @mixin sprite-height($sprite) {
-  height: nth($sprite, 6);
+  height: map-get($sprite, "height");
 }
 
 @mixin sprite-position($sprite) {
-  $sprite-offset-x: nth($sprite, 3);
-  $sprite-offset-y: nth($sprite, 4);
-  background-position: $sprite-offset-x  $sprite-offset-y;
+  $sprite-offset-x: map-get($sprite, "offset-x");
+  $sprite-offset-y: map-get($sprite, "offset-y");
+  background-position: $sprite-offset-x $sprite-offset-y;
 }
 
-@mixin sprite-image($sprite) {
-  $sprite-image: nth($sprite, 9);
-  background-image: url(#{$sprite-image});
+@mixin sprite-image() {
+  background-image: url(#{$spritesheet-url});
 }
 
 @mixin sprite($sprite) {
-  @include sprite-image($sprite);
-  @include sprite-position($sprite);
   @include sprite-width($sprite);
   @include sprite-height($sprite);
+  @include sprite-image();
+  @include sprite-position($sprite);
 }
 {{/if}}
 {{/block}}
-
 {{#block "spritesheet-functions-comment"}}
 {{#if options.functions}}
-// The `sprites` mixin generates identical output to the CSS template
-//   but can be overridden inside of SCSS
-//
-// @include sprites($spritesheet-sprites);
 {{/if}}
 {{/block}}
 {{#block "spritesheet-functions"}}
 {{#if options.functions}}
+
+// Spritesheet mixins
+//
+// Pass the `$spritesheet-sprites` variable to this mixin so that it generates
+// for you a set of uniquely named classes for each sprite.
+
 @mixin sprites($sprites) {
   @each $sprite in $sprites {
-    $sprite-name: nth($sprite, 10);
+    $sprite-name: map-get($sprite, "name");
     .#{$sprite-name} {
       @include sprite($sprite);
     }

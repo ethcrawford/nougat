@@ -154,6 +154,11 @@ function setMode(env) {
           },
           apiOptions: {
             cssImageRef: "img/spritesmith-spritesheet.png",
+            handlebarsHelpers: {
+              removePrefix: string => {
+                return string.replace(/^retina-?_?/, "");
+              },
+            },
           },
           spritesmithOptions: {
             padding: 4,
@@ -378,6 +383,11 @@ function setMode(env) {
         },
         apiOptions: {
           cssImageRef: "img/spritesmith-spritesheet.png",
+          handlebarsHelpers: {
+            removePrefix: string => {
+              return string.replace(/^retina-?_?/, "");
+            },
+          },
         },
         spritesmithOptions: {
           padding: 4,
